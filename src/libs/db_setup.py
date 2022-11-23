@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.pool import QueuePool
 
-from libs.settings import (
+from src.libs.settings import (
     DB_DIALECT,
     DB_DRIVER,
     DB_USERNAME,

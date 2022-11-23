@@ -8,7 +8,7 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from libs.settings import (
+from src.libs.settings import (
     DB_HOST,
     DB_PORT,
     DB_NAME,
@@ -32,8 +32,6 @@ fileConfig(config.config_file_name)
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-
-from libs.models.tweets import *
 
 
 target_metadata = Tweets.metadata

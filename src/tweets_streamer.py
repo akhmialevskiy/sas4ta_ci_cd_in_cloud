@@ -8,7 +8,7 @@ import boto3
 import tweepy
 from botocore.exceptions import ClientError
 
-from libs.constants import (
+from src.libs.constants import (
     FILTER_EXPANSIONS_LIST,
     FILTER_MEDIA_FIELDS_LIST,
     FILTER_PLACE_FIELDS_LIST,
@@ -16,8 +16,8 @@ from libs.constants import (
     FILTER_TWEET_FIELDS_LIST,
     FILTER_USER_FIELDS_LIST
 )
-from libs.models import Tweets, Users
-from libs.settings import (
+from src.libs.models import Tweets, Users
+from src.libs import (
     AWS_BEARER_TOKEN,
     AWS_ACCESS_KEY_ID,
     AWS_SECRET_ACCESS_KEY,

@@ -2,8 +2,8 @@
 from sqlalchemy import Column, Integer, String, DateTime, BigInteger, Boolean
 from sqlalchemy.orm import relationship
 
-from libs.db_session import SessionManager
-from libs.db_setup import Base
+from src.libs.db_session import SessionManager
+from src.libs.db_setup import Base
 
 
 class Users(Base, SessionManager):
