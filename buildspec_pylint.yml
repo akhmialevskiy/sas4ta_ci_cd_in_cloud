@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+    commands:
+      - python3 -m pip install --upgrade pip
+      - pip3 install pylint pylint-exit
+  build:
+    commands:
+      - mkdir tta-pylint-report
+      - pylint --fail-under=${PYLINT_THRESHOLD} src/
+      - pylint --output-format=text src/ | tee tta-pylint-report/pylint.txt || pylint-exit $?
+      - core=$(sed -n 's/^Your code has been rated at \([-0-9.]*\)\/.*/\1/p' tta-pylint-report/pylint.txt)
+      - echo "Pylint score was $score"
+
+reports:
+  pylint_reports:
+    files:
+      - pylint.txt
+    base-directory: tta-pylint-report
