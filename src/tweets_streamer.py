@@ -8,7 +8,7 @@ import boto3
 import tweepy
 from botocore.exceptions import ClientError
 
-from src.libs.constants import (
+from libs.constants import (
     FILTER_EXPANSIONS_LIST,
     FILTER_MEDIA_FIELDS_LIST,
     FILTER_PLACE_FIELDS_LIST,
@@ -16,15 +16,10 @@ from src.libs.constants import (
     FILTER_TWEET_FIELDS_LIST,
     FILTER_USER_FIELDS_LIST
 )
-from src.libs.models import Tweets, Users
-from src.libs import (
-    AWS_BEARER_TOKEN,
-    AWS_ACCESS_KEY_ID,
-    AWS_SECRET_ACCESS_KEY,
-    AWS_REGION_NAME,
-    AWS_FIREHOSE_DELIVERY_STREAM, DEBUG_MODE
-)
-
+from libs.models import Users
+from libs.models.tweets import Tweets
+from libs.settings import AWS_REGION_NAME, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_FIREHOSE_DELIVERY_STREAM, \
+    DEBUG_MODE, AWS_BEARER_TOKEN
 
 # Set up our logger
 logging.basicConfig(level=logging.INFO)

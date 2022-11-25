@@ -3,8 +3,8 @@ import boto3
 import codecs
 import logging
 
-
-from src.libs.models import Tweets, Users
+from libs.models import Users
+from libs.models.tweets import Tweets
 
 S3_BUCKET_NAME = 's3-tta-bucket'
 s3 = boto3.client('s3')

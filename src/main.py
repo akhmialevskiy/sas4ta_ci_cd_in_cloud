@@ -10,7 +10,7 @@ from nltk.corpus import stopwords
 from sqlalchemy import desc
 from starlette.responses import Response
 
-from src.libs.models import Tweets
+from libs.models import Tweets
 
 app = FastAPI()
 

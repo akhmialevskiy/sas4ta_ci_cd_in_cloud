@@ -1,4 +1,4 @@
-from src.libs.models.users import Users
+from libs.models.users import Users
 
 __all__ = (
     'Tweets',

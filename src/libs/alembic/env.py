@@ -8,7 +8,8 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from src.libs.settings import (
+from libs.models.tweets import *
+from libs.settings import (
     DB_HOST,
     DB_PORT,
     DB_NAME,
