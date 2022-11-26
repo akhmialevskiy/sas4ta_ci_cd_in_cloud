@@ -1,4 +1,4 @@
-"""Main module for stream tweets"""
+"""Main module for tweets streaming"""
 import json
 import logging
 import signal
@@ -16,18 +16,31 @@ from libs.constants import (
     FILTER_TWEET_FIELDS_LIST,
     FILTER_USER_FIELDS_LIST
 )
-from libs.models import Users
-from libs.models.tweets import Tweets
-from libs.settings import AWS_REGION_NAME, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_FIREHOSE_DELIVERY_STREAM, \
-    DEBUG_MODE, AWS_BEARER_TOKEN
+from libs.settings import (
+    AWS_ACCESS_KEY_ID,
+    AWS_BEARER_TOKEN,
+    AWS_FIREHOSE_DELIVERY_STREAM,
+    AWS_REGION_NAME,
+    AWS_SECRET_ACCESS_KEY,
+    DEBUG_MODE
+)
 
 # Set up our logger
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
 
-def signal_handler(_signo, _stack_frame):
-    logger.warning(f'Signal {_signo} received. Exit')
+def signal_handler(sig_num, stack_frame):
+    """Signal handler function.
+
+    :param sig_num: Signal number
+    :type sig_num: int
+    :param stack_frame: Stack frame
+    :type stack_frame:
+    """
+    logger.warning(f'Signal {sig_num} received. Exit')
+    if DEBUG_MODE:
+        logger.warning(stack_frame)
     sys.exit(0)
 
 
@@ -43,11 +56,11 @@ class TweetsStream(tweepy.StreamingClient):
         self.delivery_stream = AWS_FIREHOSE_DELIVERY_STREAM
         super(TweetsStream, self).__init__(bearer_token=bearer_token)
 
-    def put_tweet_record(self, tweet_data: str) -> None:
+    def put_tweet_record(self, tweet_data: bytes) -> None:
         """Put tweets to the AWS Firehose stream.
 
-        :param tweet_data:
-        :type tweet_data:
+        :param tweet_data: Tweet data get from Tweet API
+        :type tweet_data: bytes
         """
         try:
             self.client.put_record(
@@ -55,61 +68,30 @@ class TweetsStream(tweepy.StreamingClient):
                 Record={'Data': f'{tweet_data.decode("utf-8")}\n'}
             )
         except ClientError as error:
-            logger.error(f'Failed to put data Firehose stream: {error}')
+            logger.error(f'Failed to put data to the Firehose stream: {error}')
 
     def on_connect(self):
         """This function gets called when the stream is working
         """
-        logger.info("Connected to Twitter API.")
+        logger.info("Connected to the Twitter Developer API.")
 
-    def on_data(self, data: str):
+    def on_data(self, raw_data: bytes):
         """This is called when raw data is received from the stream.
         This method handles sending the data to other methods.
 
-        :param data: The raw data from the stream
-        :type data: str
+        :param raw_data: The raw data from the stream
+        :type raw_data: bytes
         """
 
         # Stop stream on SIGINT signal
         signal.signal(signal.SIGINT, signal_handler)
 
         # Put tweet to stream
-        self.put_tweet_record(tweet_data=data)
+        self.put_tweet_record(tweet_data=raw_data)
 
-        tweet = json.loads(data)
+        tweet = json.loads(raw_data)
         if "errors" in tweet:
             self.on_errors(tweet["errors"])
-
-        if DEBUG_MODE:
-            user_id = tweet['data']['author_id']
-            author = Users(id=user_id)
-
-            for user in tweet['includes']['users']:
-                if user_id == user['id']:
-                    author = Users(
-                        id=user_id,
-                        created=user['created_at'],
-                        description=user['description'],
-                        location=user.get('location', None),
-                        followers=user['public_metrics']['followers_count'],
-                        friends=user['public_metrics']['following_count'],
-                        statuses=user['verified']
-                    )
-                    break
-
-            tweet_text = tweet['data']['text']
-            logger.info(f'Tweet text is: {tweet_text}')
-
-            tweet_model = Tweets(
-                id=tweet['data']['id'],
-                text=tweet_text,
-                create_time=tweet['data']['created_at'],
-                retweets=tweet['data']['public_metrics']['retweet_count'],
-                likes=tweet['data']['public_metrics']['like_count'],
-                lang=tweet['data']['lang'],
-                author=author
-             )
-            Tweets.add_tweet(tweet_model)
 
     def on_error(self, status):
         """This is called when errors are received.
