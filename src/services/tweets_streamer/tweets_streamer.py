@@ -18,7 +18,7 @@ from libs.constants import (
 )
 from libs.settings import (
     AWS_ACCESS_KEY_ID,
-    AWS_BEARER_TOKEN,
+    TWITTER_BEARER_TOKEN,
     AWS_FIREHOSE_DELIVERY_STREAM,
     AWS_REGION_NAME,
     AWS_SECRET_ACCESS_KEY,
@@ -103,7 +103,7 @@ class TweetsStream(tweepy.StreamingClient):
 
 
 if __name__ == '__main__':
-    stream = TweetsStream(bearer_token=AWS_BEARER_TOKEN)
+    stream = TweetsStream(bearer_token=TWITTER_BEARER_TOKEN)
     if DEBUG_MODE:
         stream.add_rules(add=tweepy.StreamRule('"breaking news"'))  # adding the rules
 

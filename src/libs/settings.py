@@ -4,7 +4,7 @@ from decouple import config
 
 AWS_API_KEY = getenv('AWS_API_KEY', config('AWS_API_KEY', default=''))
 AWS_API_SECRET_KEY = getenv('AWS_API_SECRET_KEY', config('AWS_API_SECRET_KEY', default=''))
-AWS_BEARER_TOKEN = getenv('AWS_BEARER_TOKEN', config('AWS_BEARER_TOKEN', default=''))
+TWITTER_BEARER_TOKEN = getenv('TWITTER_BEARER_TOKEN', config('TWITTER_BEARER_TOKEN', default=''))
 AWS_ACCESS_TOKEN = getenv('AWS_ACCESS_TOKEN', config('AWS_ACCESS_TOKEN', default=''))
 AWS_ACCESS_TOKEN_SECRET = getenv('AWS_ACCESS_TOKEN_SECRET', config('AWS_ACCESS_TOKEN_SECRET', default=''))
 
