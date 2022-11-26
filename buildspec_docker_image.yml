@@ -8,12 +8,15 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - echo Building the Docker image...
+      - echo Building the Docker images...
       - ls -al
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG -f src/services/tweets_streamer/Dockerfile .
+      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG_APP -f src/services/trends_aggregator/Dockerfile .
       - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG_APP $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG_APP
   post_build:
     commands:
       - echo Build completed on `date`
-      - echo Pushing the Docker image...
+      - echo Pushing the Docker images...
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG_APP
