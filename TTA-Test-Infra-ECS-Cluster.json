@@ -1,22 +1,60 @@
 {
-  "ECSCluster": {
-    "Type": "AWS::ECS::Cluster",
-    "Properties": {
-      "ClusterName": "MyFargateCluster",
-      "CapacityProviders": [
-        "FARGATE",
-        "FARGATE_SPOT"
-      ],
-      "DefaultCapacityProviderStrategy": [
-        {
-          "CapacityProvider": "FARGATE",
-          "Weight": 1
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "The template used to create an ECS Cluster from the ECS Console.",
+  "Parameters": {
+    "ECSClusterName": {
+      "Type": "String",
+      "Description": "Specifies the ECS Cluster Name with which the resources would be associated",
+      "Default": "tta-ecs-test-cluster"
+    },
+    "VpcId": {
+      "Type": "String",
+      "Description": "Optional - Specifies the ID of an existing VPC in which to launch your container instances. If you specify a VPC ID, you must specify a list of existing subnets in that VPC. If you do not specify a VPC ID, a new VPC is created with atleast 1 subnet.",
+      "Default": "vpc-0f19a3a30d8109423",
+      "AllowedPattern": "^(?:vpc-[0-9a-f]{8,17}|)$",
+      "ConstraintDescription": "VPC Id must begin with 'vpc-' and have a valid uuid"
+    },
+    "SubnetIds": {
+      "Type": "CommaDelimitedList",
+      "Description": "Optional - Specifies the Comma separated list of existing VPC Subnet Ids where ECS instances will run",
+      "Default": "subnet-08017ac2ff7b485af,subnet-0a9862c50ab4b7a41,subnet-0a0bd03e95667c9b8,subnet-043ae54a118fd3ecd,subnet-053c701a6cce42542,subnet-03e175438364846d4"
+    }
+  },
+  "Resources": {
+    "ECSCluster": {
+      "Type": "AWS::ECS::Cluster",
+      "Properties": {
+        "CapacityProviders": [
+          "FARGATE",
+          "FARGATE_SPOT"
+        ],
+        "ClusterName": "tta-ecs-test-cluster",
+        "ClusterSettings": [
+          {
+            "Name": "containerInsights",
+            "Value": "disabled"
+          }
+        ],
+        "Configuration": {
+          "ExecuteCommandConfiguration": {
+            "Logging": "DEFAULT"
+          }
         },
-        {
-          "CapacityProvider": "FARGATE_SPOT",
-          "Weight": 1
-        }
-      ]
+        "Tags": [
+          {
+            "Key": "ecs:cluster:createdFrom",
+            "Value": "ecs-console-v2"
+          }
+        ]
+      }
+    }
+  },
+  "Outputs": {
+    "ECSCluster": {
+      "Description": "The created cluster.",
+      "Value": {
+        "Ref": "ECSCluster"
+      }
     }
   }
 }
