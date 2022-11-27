@@ -20,12 +20,12 @@ phases:
       - echo Pushing the Docker images...
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG_APP
-      - printf '[{"name":"tta-trends-aggregator","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG_APP > imagedefinitions.json
-      - ls -al
-      - cat imagedefinitions.json
+      - printf '[{"name":"tta-trends-aggregator","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG_APP > app_imagedefinitions.json
+      - printf '[{"name":"tta-tweets-streamer","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG > stream_imagedefinitions.json
 
 artifacts:
   files:
-    - 'imagedefinitions.json'
+    - 'app_imagedefinitions.json'
+    - 'stream_imagedefinitions.json'
   discard-paths: no
   name: trends_aggregator-$(date +%Y-%m-%d)
