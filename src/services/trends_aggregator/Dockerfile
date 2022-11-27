@@ -16,4 +16,4 @@ RUN pip3 install -r /app/requirements.txt
 ADD ./src/libs /app/libs
 COPY ./src/services/trends_aggregator /app/services/trends_aggregator
 
-CMD ["uvicorn", "services.trends_aggregator.main:app"]
+CMD ["uvicorn", "services.trends_aggregator.main:app", "--host 0.0.0.0"]
