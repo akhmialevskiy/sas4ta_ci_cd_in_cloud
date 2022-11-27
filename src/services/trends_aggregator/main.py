@@ -19,6 +19,13 @@ class PrettyJSONResponse(Response):
     media_type = "application/json"
 
     def render(self, content: typing.Any) -> bytes:
+        """
+
+        :param content:
+        :type content:
+        :return:
+        :rtype:
+        """
         return json.dumps(
             content,
             ensure_ascii=False,
@@ -30,14 +37,37 @@ class PrettyJSONResponse(Response):
 
 @app.get('/tweets/popular/{limit}', response_class=PrettyJSONResponse)
 def user_list(limit: int):
+    """
+
+    :param limit:
+    :type limit:
+    :return:
+    :rtype:
+    """
     tweets = Tweets.get_query_by_filter(columns=[Tweets.text, Tweets.retweets]).\
         order_by(desc(Tweets.retweets)).limit(limit).all()
 
     return {'tweets': tweets}
 
+@app.get('/tweets/count', response_class=PrettyJSONResponse)
+def user_list():
+    """
+
+    :return:
+    :rtype:
+    """
+    return {'tweets': Tweets.get_count()}
+
 
 @app.get('/hashtags/popular/{limit}', response_class=PrettyJSONResponse)
 def user_list(limit: int):
+    """
+
+    :param limit:
+    :type limit:
+    :return:
+    :rtype:
+    """
     tweets = Tweets.get_query_by_filter(columns=[Tweets.text]).all()
     logging.info(f'Tweets count: {len(tweets)}')
     hashtags = []
