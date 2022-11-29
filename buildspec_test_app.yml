@@ -4,3 +4,4 @@ phases:
   build:
     commands:
        - echo "All test OK"
+       - aws ecs delete-service --cluster tta-ecs-test-cluster --service tta-app-test-service --force
