@@ -12,6 +12,7 @@ ENV PYTHONPATH "${PYTHONPATH}:."
 
 COPY ./requirements.txt /app/requirements.txt
 RUN pip3 install -r /app/requirements.txt
+RUN python -m nltk.downloader stopwords
 
 ADD ./src/libs /app/libs
 COPY ./src/services/trends_aggregator /app/services/trends_aggregator

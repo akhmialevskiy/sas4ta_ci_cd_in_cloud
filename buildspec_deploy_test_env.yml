@@ -1,0 +1,9 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo Test Env Deploy started on `date`
+      - aws ecs delete-service --cluster tta-ecs-test-cluster --service tta-app-test-service --force
+      - task_def=`aws ecs list-task-definitions --family-prefix tta-trends-aggregator --sort DESC --query "taskDefinitionArns[0]" | tr "/" " " | awk '{print $2}' | tr -d '"'`
+      - aws ecs create-service --cluster tta-ecs-test-cluster --service-name tta-app-test-service --task-definition "${task_def}" --desired-count 1 --launch-type FARGATE --platform-version LATEST --network-configuration "awsvpcConfiguration={subnets=[subnet-08017ac2ff7b485af,subnet-0a9862c50ab4b7a41,subnet-0a0bd03e95667c9b8,subnet-043ae54a118fd3ecd,subnet-053c701a6cce42542,subnet-03e175438364846d4],securityGroups=[sg-079808024e38d2926],assignPublicIp=ENABLED}"
