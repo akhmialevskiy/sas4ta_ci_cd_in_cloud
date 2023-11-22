@@ -1,4 +1,5 @@
-"""This module contains Tweets model and class(es) used by the model."""
+"""This module contains a Tweets model and class(es) used by the model.
+"""
 from sqlalchemy import Column, exc, Integer, String, ForeignKey, DateTime, BigInteger
 from sqlalchemy.orm import relationship
 
@@ -7,7 +8,8 @@ from libs.db_setup import Base
 
 
 class Tweets(Base, SessionManager):
-    """Class to handle the Tweets list table."""
+    """Class to handle the Tweets list table.
+    """
 
     __tablename__ = 'tweets'
 

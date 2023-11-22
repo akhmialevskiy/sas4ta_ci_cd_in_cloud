@@ -1,11 +1,13 @@
-"""Main module with different DB actions"""
+"""Main module with different DB actions.
+"""
 from sqlalchemy.dialects.postgresql import insert
 
 from libs.db_setup import DBSession
 
 
 class SessionManager:
-    """Session manager for sqlalchemy"""
+    """Session manager for sqlalchemy.
+    """
 
     session = DBSession()
 

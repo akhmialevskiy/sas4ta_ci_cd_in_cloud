@@ -1,4 +1,5 @@
-"""Main module for tweets streaming"""
+"""Main module for tweets streaming.
+"""
 import json
 import logging
 import signal

@@ -1,4 +1,5 @@
-"""This module contains Users model and class(es) used by the model."""
+"""This module contains Users model and class(es) used by the model.
+"""
 from sqlalchemy import Column, Integer, String, DateTime, BigInteger, Boolean
 from sqlalchemy.orm import relationship
 
@@ -7,7 +8,8 @@ from libs.db_setup import Base
 
 
 class Users(Base, SessionManager):
-    """Class to handle the Users list table."""
+    """Class to handle the Users list table.
+    """
 
     __tablename__ = 'users'
 

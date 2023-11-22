@@ -1,4 +1,5 @@
-"""List of common settings used"""
+"""List of common settings used.
+"""
 from os import getenv
 from decouple import config
 

@@ -37,5 +37,6 @@ DBSession = scoped_session(sessionmaker(bind=engine, future=True))
 
 
 def create_tables():
-    """Create Tables."""
+    """Create Tables.
+    """
     Base.metadata.create_all(engine)

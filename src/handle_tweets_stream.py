@@ -3,7 +3,7 @@ import boto3
 import codecs
 import logging
 
-from libs.models import Users
+from libs.models.users import Users
 from libs.models.tweets import Tweets
 
 S3_BUCKET_NAME = 's3-tta-bucket'

@@ -1,9 +1,10 @@
-"""Modul with list of constants used"""
+"""Modul with a list of constants used.
+"""
 
 # List of filter parameters.
 # From https://developer.twitter.com/en/docs/twitter-api/tweets/filtered-stream/api-reference/get-tweets-search-stream
 
-# This fields parameter enables you to select which specific Tweet fields will deliver in each returned Tweet object
+# This field parameter enables you to select which specific Tweet fields will deliver in each returned Tweet object
 FILTER_TWEET_FIELDS_LIST = [
     'attachments',
     'author_id',
@@ -36,7 +37,7 @@ FILTER_EXPANSIONS_LIST = [
     'referenced_tweets.id',
     'referenced_tweets.id.author_id'
 ]
-# This fields parameter enables you to select which specific media fields will deliver in each returned Tweet.
+# This field parameter enables you to select which specific media fields will deliver in each returned Tweet.
 FILTER_MEDIA_FIELDS_LIST = [
     'duration_ms',
     'height',
@@ -49,7 +50,7 @@ FILTER_MEDIA_FIELDS_LIST = [
     'alt_text',
     'variants'
 ]
-# This fields parameter enables you to select which specific place fields will deliver in each returned Tweet.
+# This field parameter enables you to select which specific place fields will deliver in each returned Tweet.
 FILTER_PLACE_FIELDS_LIST = [
     'contained_within',
     'country',
@@ -60,7 +61,7 @@ FILTER_PLACE_FIELDS_LIST = [
     'name',
     'place_type'
 ]
-# This fields parameter enables you to select which specific poll fields will deliver in each returned Tweet.
+# This field parameter enables you to select which specific poll fields will deliver in each returned Tweet.
 FILTER_POLL_FIELDS_LIST = [
     'duration_minutes',
     'end_datetime',
@@ -68,7 +69,7 @@ FILTER_POLL_FIELDS_LIST = [
     'options',
     'voting_status'
 ]
-# This fields parameter enables you to select which specific user fields will deliver in each returned Tweet.
+# This field parameter enables you to select which specific user fields will deliver in each returned Tweet.
 FILTER_USER_FIELDS_LIST = [
     'created_at',
     'description',
